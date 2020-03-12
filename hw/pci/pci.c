@@ -48,6 +48,7 @@
 #include "qapi/error.h"
 #include "qapi/qapi-commands-misc.h"
 #include "qemu/cutils.h"
+#include "qemu/log.h"
 
 //#define DEBUG_PCI
 #ifdef DEBUG_PCI
@@ -1389,7 +1390,7 @@ uint32_t pci_default_read_config(PCIDevice *d,
 
 void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int l)
 {
-        qemu_log_mask(LOG_XAR_CUSTOM, "pci_default_write_config addr:0x%x val_in:%u\n", address, val_in);
+    qemu_log_mask(LOG_XAR_CUSTOM, "pci_default_write_config addr:0x%x val_in:%u\n", addr, val_in);
     int i, was_irq_disabled = pci_irq_disabled(d);
     uint32_t val = val_in;
 

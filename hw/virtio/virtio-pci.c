@@ -391,6 +391,7 @@ static uint32_t virtio_ioport_read(VirtIOPCIProxy *proxy, uint32_t addr)
               >> VIRTIO_PCI_QUEUE_ADDR_SHIFT;
         break;
     case VIRTIO_PCI_QUEUE_NUM:
+        qemu_log_mask(LOG_XAR_CUSTOM, "virtio_ioport_read VIRTIO_PCI_QUEUE_NUM\n");
         ret = virtio_queue_get_num(vdev, vdev->queue_sel);
         break;
     case VIRTIO_PCI_QUEUE_SEL:
@@ -602,6 +603,7 @@ virtio_address_space_read(VirtIOPCIProxy *proxy, hwaddr addr,
 static void virtio_write_config(PCIDevice *pci_dev, uint32_t address,
                                 uint32_t val, int len)
 {
+    qemu_log_mask(LOG_XAR_CUSTOM, "virtio_write_config address:0x%x val:0x%x len:%u\n", address, val, len);
     VirtIOPCIProxy *proxy = VIRTIO_PCI(pci_dev);
     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
     struct virtio_pci_cfg_cap *cfg;
@@ -643,6 +645,7 @@ static void virtio_write_config(PCIDevice *pci_dev, uint32_t address,
 static uint32_t virtio_read_config(PCIDevice *pci_dev,
                                    uint32_t address, int len)
 {
+    qemu_log_mask(LOG_XAR_CUSTOM, "virtio_read_config address:0x%x len:%u\n", address, len);
     VirtIOPCIProxy *proxy = VIRTIO_PCI(pci_dev);
     struct virtio_pci_cfg_cap *cfg;
 
