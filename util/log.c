@@ -334,6 +334,8 @@ const QEMULogItem qemu_log_items[] = {
 #endif
     { LOG_STRACE, "strace",
       "log every user-mode syscall, its input, and its result" },
+    { LOG_XAR_CUSTOM, "xar_custom",
+      "custom log for debugging by xar" },
     { 0, NULL, NULL },
 };
 

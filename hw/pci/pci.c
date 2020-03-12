@@ -1377,6 +1377,7 @@ uint32_t pci_default_read_config(PCIDevice *d,
                                  uint32_t address, int len)
 {
     uint32_t val = 0;
+    qemu_log_mask(LOG_XAR_CUSTOM, "pci_default_read_config addr:0x%x len:%u\n", address, len);
 
     if (pci_is_express_downstream_port(d) &&
         ranges_overlap(address, len, d->exp.exp_cap + PCI_EXP_LNKSTA, 2)) {
@@ -1388,6 +1389,7 @@ uint32_t pci_default_read_config(PCIDevice *d,
 
 void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int l)
 {
+        qemu_log_mask(LOG_XAR_CUSTOM, "pci_default_write_config addr:0x%x val_in:%u\n", address, val_in);
     int i, was_irq_disabled = pci_irq_disabled(d);
     uint32_t val = val_in;
 

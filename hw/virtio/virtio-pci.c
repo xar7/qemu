@@ -26,6 +26,7 @@
 #include "hw/qdev-properties.h"
 #include "qapi/error.h"
 #include "qemu/error-report.h"
+#include "qemu/log.h"
 #include "qemu/module.h"
 #include "hw/pci/msi.h"
 #include "hw/pci/msix.h"
@@ -294,6 +295,7 @@ static void virtio_pci_stop_ioeventfd(VirtIOPCIProxy *proxy)
 
 static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
 {
+    qemu_log_mask(LOG_XAR_CUSTOM, "Virtio ioport write addr: 0x%x val 0x%x\n", addr, val);
     VirtIOPCIProxy *proxy = opaque;
     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
     hwaddr pa;
@@ -324,6 +326,7 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
         }
         break;
     case VIRTIO_PCI_STATUS:
+        qemu_log_mask(LOG_XAR_CUSTOM, "virtio_ioport_write PCI_STATUS\n");
         if (!(val & VIRTIO_CONFIG_S_DRIVER_OK)) {
             virtio_pci_stop_ioeventfd(proxy);
         }
@@ -372,6 +375,7 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
 
 static uint32_t virtio_ioport_read(VirtIOPCIProxy *proxy, uint32_t addr)
 {
+    qemu_log_mask(LOG_XAR_CUSTOM, "Virtio ioport read addr: 0x%x\n", addr);
     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
     uint32_t ret = 0xFFFFFFFF;
 
